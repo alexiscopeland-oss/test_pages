@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AT Tool Comparison Guide — Hartnell College DSPS</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#F7F8FA;color:#222;line-height:1.6;font-size:16px}
+a{color:#6B1E3C;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.site-header{background:#6B1E3C;color:#fff;padding:2rem 2rem 1.5rem}
+.site-header h1{font-size:1.75rem;font-weight:700;margin-bottom:.4rem}
+.site-header p{font-size:.95rem;opacity:.85}
+.header-meta{margin-top:.75rem;font-size:.8rem;opacity:.65}
+
+/* Nav */
+.top-nav{background:#4A1028;padding:.5rem 2rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.top-nav a{color:#E8C0CC;font-size:.85rem;transition:color .15s}
+.top-nav a:hover{color:#fff;text-decoration:none}
+
+/* Layout */
+.container{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
+
+/* Intro */
+.intro-box{background:#fff;border:1px solid #dde3ed;border-radius:10px;padding:1.5rem;margin-bottom:2rem;border-left:4px solid #1E5B9E}
+.intro-box p{color:#444;margin-bottom:.6rem;font-size:.95rem}
+.intro-box p:last-child{margin-bottom:0}
+
+/* Section headers */
+.section-header{font-size:1.25rem;font-weight:700;color:#6B1E3C;margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #F2E4E9}
+
+/* Tool selector */
+.tool-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
+.tool-tab{background:#fff;border:1px solid #dcc6cc;border-radius:8px;padding:.5rem 1rem;font-size:.875rem;cursor:pointer;transition:all .15s;color:#333;font-weight:500}
+.tool-tab:hover{border-color:#6B1E3C;color:#6B1E3C}
+.tool-tab.active{background:#6B1E3C;color:#fff;border-color:#6B1E3C}
+
+/* Tool card */
+.tool-card{background:#fff;border:1px solid #dde3ed;border-radius:12px;padding:1.75rem;display:none;margin-bottom:2rem}
+.tool-card.visible{display:block}
+.tool-card-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid #eee}
+.tool-icon-lg{width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.tool-card-title{font-size:1.3rem;font-weight:700;color:#6B1E3C;margin-bottom:.2rem}
+.tool-card-tagline{font-size:.9rem;color:#666;font-style:italic}
+
+.attrs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.25rem}
+.attr-item{background:#FBF3F6;border-radius:8px;padding:.75rem 1rem}
+.attr-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#8C3555;margin-bottom:.25rem}
+.attr-value{font-size:.875rem;color:#222}
+
+.subsection{margin-bottom:1.25rem}
+.subsection-title{font-size:.875rem;font-weight:700;color:#333;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.6rem}
+.desc-text{font-size:.925rem;color:#444;line-height:1.65}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
+@media(max-width:600px){.pros-cons{grid-template-columns:1fr}}
+.pc-box{border-radius:8px;padding:1rem}
+.pros-box{background:#EBF5EC;border:1px solid #A8D5AE}
+.cons-box{background:#FEF0F0;border:1px solid #F4BABA}
+.pc-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
+.pros-box .pc-title{color:#1B5E20}
+.cons-box .pc-title{color:#7B1A1A}
+.pc-list{list-style:none;font-size:.85rem;line-height:1.65}
+.pros-box .pc-list{color:#1A3A1A}
+.cons-box .pc-list{color:#5A1A1A}
+.pc-list li::before{content:"• ";opacity:.6}
+
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.fit-grid{grid-template-columns:1fr}}
+.fit-box{border-radius:8px;padding:1rem}
+.fit-best{background:#EBF5EC;border:1px solid #A8D5AE}
+.fit-avoid{background:#FEF0F0;border:1px solid #F4BABA}
+.fit-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
+.fit-best .fit-title{color:#1B5E20}
+.fit-avoid .fit-title{color:#7B1A1A}
+.fit-text{font-size:.875rem;line-height:1.6;color:#222;margin-bottom:.5rem}
+.disability-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:.5rem}
+.dtag{font-size:.7rem;background:#F2E4E9;color:#6B1E3C;padding:2px 8px;border-radius:20px;font-weight:500}
+
+/* Matrix */
+.matrix-wrap{overflow-x:auto;margin-bottom:2rem}
+.matrix-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:680px}
+.matrix-table th{background:#6B1E3C;color:#fff;padding:.6rem .75rem;text-align:left;font-weight:600;white-space:nowrap}
+.matrix-table td{padding:.55rem .75rem;border-bottom:1px solid #eee;vertical-align:middle}
+.matrix-table tr:nth-child(even) td{background:#F7F8FA}
+.matrix-table tr:hover td{background:#EFF4FB}
+.tool-name-cell{font-weight:600;color:#6B1E3C;white-space:nowrap}
+.star-strong{color:#1B5E20;font-weight:600}
+.star-mid{color:#4A7A4A}
+.star-low{color:#999}
+.na-cell{color:#ccc}
+
+/* Decision tree */
+.decision-tree{background:#fff;border:1px solid #dde3ed;border-radius:12px;padding:1.75rem;margin-bottom:2rem}
+.dt-question{font-size:1rem;font-weight:600;color:#6B1E3C;margin-bottom:.75rem;margin-top:1.25rem}
+.dt-question:first-of-type{margin-top:0}
+.dt-options{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
+.dt-opt{display:flex;align-items:flex-start;gap:.75rem;background:#FBF3F6;border:1px solid #dde3ed;border-radius:8px;padding:.75rem 1rem;font-size:.875rem;color:#333;line-height:1.5}
+.dt-opt-arrow{color:#8C3555;flex-shrink:0;margin-top:1px}
+.dt-result-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:.35rem}
+.dt-tag{font-size:.7rem;padding:2px 8px;border-radius:20px;font-weight:500}
+.dt-tag-blue{background:#F2E4E9;color:#4A1028}
+.dt-tag-green{background:#EBF5EC;color:#1B5E20}
+.dt-tag-amber{background:#FFF3DC;color:#7A4F00}
+.dt-tag-coral{background:#FEE9E3;color:#7A2E00}
+
+.dt-divider{border:none;border-top:1px solid #eee;margin:1.25rem 0}
+
+/* Footer */
+.site-footer{background:#4A1028;color:#E8C0CC;text-align:center;padding:1.25rem;font-size:.8rem;margin-top:3rem}
+
+/* Print */
+@media print{
+  .tool-tabs,.top-nav{display:none}
+  .tool-card{display:block!important;break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}
+  .site-header{background:#6B1E3C!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .matrix-table th{background:#6B1E3C!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Assistive Technology Comparison Guide</h1>
+  <p>Department of Supportive Programs &amp; Services — Hartnell College</p>
+  <p class="header-meta">Screen Readers, Lecture Capture, and AI Reading Tools — Counselor Reference Guide</p>
+</header>
+
+<nav class="top-nav">
+  <a href="#tools">Tool Profiles</a>
+  <a href="#matrix">Quick Reference Matrix</a>
+  <a href="#decision">Decision Guide</a>
+</nav>
+
+<main class="container">
+
+  <div class="intro-box">
+    <p>This guide helps DSPS counselors and disability staff match students with the most appropriate assistive technology based on their disability, tech comfort level, and primary use case.</p>
+    <p>The five tools covered represent the core AT options for reading support and lecture access. Tools are not mutually exclusive — many students benefit from using two in combination (e.g., Genio + Otter AI for students who need both lecture recording and live captions).</p>
+  </div>
+
+  <h2 class="section-header" id="tools">Tool Profiles</h2>
+
+  <div class="tool-tabs">
+    <button class="tool-tab active" onclick="showTool('kurzweil', this)">Kurzweil 3000</button>
+    <button class="tool-tab" onclick="showTool('speechify', this)">Speechify</button>
+    <button class="tool-tab" onclick="showTool('tailo', this)">Tailo</button>
+    <button class="tool-tab" onclick="showTool('genio', this)">Genio</button>
+    <button class="tool-tab" onclick="showTool('otter', this)">Otter AI</button>
+  </div>
+
+  <div id="tool-kurzweil" class="tool-card visible">
+    <div class="tool-card-header">
+      <div class="tool-icon-lg" style="background:#F2E4E9">📖</div>
+      <div>
+        <div class="tool-card-title">Kurzweil 3000</div>
+        <div class="tool-card-tagline">Full-page visual reading with copyright protection</div>
+      </div>
+    </div>
+    <div class="attrs-grid">
+      <div class="attr-item"><div class="attr-label">Platform</div><div class="attr-value">Windows / Mac (limited mobile)</div></div>
+      <div class="attr-item"><div class="attr-label">Tech Level</div><div class="attr-value">Moderate — requires onboarding</div></div>
+      <div class="attr-item"><div class="attr-label">Content Type</div><div class="attr-value">PDFs, textbooks, scanned pages</div></div>
+      <div class="attr-item"><div class="attr-label">AI Features</div><div class="attr-value">No — traditional TTS engine</div></div>
+      <div class="attr-item"><div class="attr-label">Lecture Capture</div><div class="attr-value">No</div></div>
+    </div>
+    <div class="subsection">
+      <div class="subsection-title">Overview</div>
+      <p class="desc-text">Kurzweil 3000 is the gold standard for text-to-speech reading in academic settings. It displays the actual source document — textbook pages, scanned PDFs, course packets — while simultaneously highlighting each word as it is read aloud. Files are stored in a proprietary KES format, giving institutions meaningful copyright protection over alternate media they produce and distribute.</p>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-box pros-box">
+        <div class="pc-title">Strengths</div>
+        <ul class="pc-list">
+          <li>Displays actual page layout while reading</li>
+          <li>Word-by-word highlighting supports decoding</li>
+          <li>Proprietary KES format protects copyright</li>
+          <li>Study tools: notes, highlights, vocabulary</li>
+          <li>Strong DSPS institutional track record</li>
+        </ul>
+      </div>
+      <div class="pc-box cons-box">
+        <div class="pc-title">Limitations</div>
+        <ul class="pc-list">
+          <li>Desktop-first — not a mobile solution</li>
+          <li>Steeper learning curve; needs onboarding</li>
+          <li>No AI summarization or Q&amp;A</li>
+          <li>Requires alternate media prepared in advance</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-box fit-best">
+        <div class="fit-title">Best fit — student profile</div>
+        <p class="fit-text">Students with print disabilities who benefit from seeing the actual page while listening. Ideal for extended academic reading — textbooks, long articles — where visual anchoring to page layout matters. Also the strongest choice when copyright-controlled alternate media distribution is a concern.</p>
+        <div class="disability-tags"><span class="dtag">Dyslexia</span><span class="dtag">Low Vision</span><span class="dtag">Visual Impairment</span><span class="dtag">Print Disability</span></div>
+      </div>
+      <div class="fit-box fit-avoid">
+        <div class="fit-title">Not the right fit when...</div>
+        <p class="fit-text">Students need mobile-first tools, real-time AI interaction, or lecture recording. Not appropriate as a quick on-ramp for low-tech students.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tool-speechify" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-icon-lg" style="background:#EBF5EC">🔊</div>
+      <div>
+        <div class="tool-card-title">Speechify</div>
+        <div class="tool-card-tagline">Fast, mobile-first listening — snap a photo and go</div>
+      </div>
+    </div>
+    <div class="attrs-grid">
+      <div class="attr-item"><div class="attr-label">Platform</div><div class="attr-value">iOS, Android, Chrome extension</div></div>
+      <div class="attr-item"><div class="attr-label">Tech Level</div><div class="attr-value">Low — very easy to start</div></div>
+      <div class="attr-item"><div class="attr-label">Content Type</div><div class="attr-value">Photos, PDFs, web pages, ebooks</div></div>
+      <div class="attr-item"><div class="attr-label">AI Features</div><div class="attr-value">Limited — speed controls, AI voices</div></div>
+      <div class="attr-item"><div class="attr-label">Lecture Capture</div><div class="attr-value">No</div></div>
+    </div>
+    <div class="subsection">
+      <div class="subsection-title">Overview</div>
+      <p class="desc-text">Speechify is the most accessible on-ramp for students who need audio support quickly and without complexity. Its standout feature is the ability to photograph a printed page with a smartphone and hear it read aloud immediately via OCR. It supports a wide range of formats but is designed for listening, not deep study workflows.</p>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-box pros-box">
+        <div class="pc-title">Strengths</div>
+        <ul class="pc-list">
+          <li>Photograph printed handouts for instant audio</li>
+          <li>Extremely simple mobile UI — minimal learning curve</li>
+          <li>Wide format support: web, PDF, docs, ebooks</li>
+          <li>High-quality natural-sounding AI voices</li>
+          <li>Free tier available; broad device compatibility</li>
+        </ul>
+      </div>
+      <div class="pc-box cons-box">
+        <div class="pc-title">Limitations</div>
+        <ul class="pc-list">
+          <li>No visual display of source material</li>
+          <li>Premium features require subscription</li>
+          <li>No note-taking, study tools, or lecture recording</li>
+          <li>Less suited to extended academic workflows</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-box fit-best">
+        <div class="fit-title">Best fit — student profile</div>
+        <p class="fit-text">Students who are tech-averse and need a fast on-ramp with minimal setup. Perfect for students who receive printed handouts in class and want to photograph them for immediate audio access. Strong first tool for students new to AT.</p>
+        <div class="disability-tags"><span class="dtag">Dyslexia</span><span class="dtag">ADHD</span><span class="dtag">Low Tech Confidence</span><span class="dtag">Any print-access need</span></div>
+      </div>
+      <div class="fit-box fit-avoid">
+        <div class="fit-title">Not the right fit when...</div>
+        <p class="fit-text">Students need deep study workflows, visual page anchoring, lecture capture, or a tool with institutional copyright controls.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tool-tailo" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-icon-lg" style="background:#EEEDFE">🧠</div>
+      <div>
+        <div class="tool-card-title">Tailo</div>
+        <div class="tool-card-tagline">AI-powered reading with summaries and comprehension support</div>
+      </div>
+    </div>
+    <div class="attrs-grid">
+      <div class="attr-item"><div class="attr-label">Platform</div><div class="attr-value">Web, mobile app</div></div>
+      <div class="attr-item"><div class="attr-label">Tech Level</div><div class="attr-value">Low-moderate — intuitive UI</div></div>
+      <div class="attr-item"><div class="attr-label">Content Type</div><div class="attr-value">Uploaded texts, PDFs, articles</div></div>
+      <div class="attr-item"><div class="attr-label">AI Features</div><div class="attr-value">Strong — summaries, simplification, Q&amp;A</div></div>
+      <div class="attr-item"><div class="attr-label">Lecture Capture</div><div class="attr-value">No</div></div>
+    </div>
+    <div class="subsection">
+      <div class="subsection-title">Overview</div>
+      <p class="desc-text">Tailo is an AI-powered academic reading platform built specifically for disabled and neurodivergent students. Rather than displaying the original source page, it processes uploaded text and provides AI-generated summaries, simplified language versions, and interactive Q&amp;A. Students can ask questions about a reading directly. Winner of the Scope Accessible Product Award 2025.</p>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-box pros-box">
+        <div class="pc-title">Strengths</div>
+        <ul class="pc-list">
+          <li>AI summarizes dense academic texts</li>
+          <li>Automatically simplifies complex language</li>
+          <li>Interactive Q&amp;A about reading content</li>
+          <li>Built specifically for neurodivergent students</li>
+          <li>Award-winning accessibility design (Scope 2025)</li>
+        </ul>
+      </div>
+      <div class="pc-box cons-box">
+        <div class="pc-title">Limitations</div>
+        <ul class="pc-list">
+          <li>Students not seeing the original page layout</li>
+          <li>Not for page-referenced citations or visual layout tasks</li>
+          <li>AI may miss nuance in technical/scientific texts</li>
+          <li>Newer platform — less US community college track record</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-box fit-best">
+        <div class="fit-title">Best fit — student profile</div>
+        <p class="fit-text">Students with cognitive disabilities, ADHD, or learning disabilities who get overwhelmed by dense academic language. The AI layer helps surface key ideas quickly. Valuable for neurodivergent students comfortable with AI tools who prefer asking follow-up questions over re-reading.</p>
+        <div class="disability-tags"><span class="dtag">ADHD</span><span class="dtag">Cognitive Disability</span><span class="dtag">Learning Disability</span><span class="dtag">Neurodivergent</span><span class="dtag">Processing Speed</span></div>
+      </div>
+      <div class="fit-box fit-avoid">
+        <div class="fit-title">Not the right fit when...</div>
+        <p class="fit-text">Students need to read pages with precise visual or layout context, work with page numbers for citations, or require in-class lecture support.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tool-genio" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-icon-lg" style="background:#FFF3DC">🎙️</div>
+      <div>
+        <div class="tool-card-title">Genio <span style="font-size:.8rem;font-weight:400;color:#888">(formerly Glean)</span></div>
+        <div class="tool-card-tagline">Lecture recording with AI notes, outlines, and study quizzes</div>
+      </div>
+    </div>
+    <div class="attrs-grid">
+      <div class="attr-item"><div class="attr-label">Platform</div><div class="attr-value">Web, iOS, Android</div></div>
+      <div class="attr-item"><div class="attr-label">Tech Level</div><div class="attr-value">Moderate — structured workflow</div></div>
+      <div class="attr-item"><div class="attr-label">Content Type</div><div class="attr-value">Live lectures, audio, slide decks</div></div>
+      <div class="attr-item"><div class="attr-label">AI Features</div><div class="attr-value">Moderate — post-lecture transcript, outlines, quizzes</div></div>
+      <div class="attr-item"><div class="attr-label">Lecture Capture</div><div class="attr-value">Yes — audio + synced notes + post-lecture AI transcript</div></div>
+    </div>
+    <div class="subsection">
+      <div class="subsection-title">Overview</div>
+      <p class="desc-text">Genio is the leading institutionally-deployed lecture capture and study tool in DSPS environments. Students record lectures while adding timestamped notes; after class, Genio generates a full transcript, AI-structured outline, and study quiz. Slide decks can be imported and synced to recordings. <strong>Important:</strong> Genio does NOT produce real-time captions — transcription happens post-lecture only. Recordings cannot be downloaded or shared outside the app, addressing faculty privacy concerns.</p>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-box pros-box">
+        <div class="pc-title">Strengths</div>
+        <ul class="pc-list">
+          <li>Records audio synced with student notes</li>
+          <li>Post-lecture AI transcript, outline, and quiz</li>
+          <li>Import and sync slide decks to recordings</li>
+          <li>Recordings cannot be downloaded or shared</li>
+          <li>Widely adopted in UC/CSU DSPS programs</li>
+          <li>Works in-person, online, and hybrid</li>
+        </ul>
+      </div>
+      <div class="pc-box cons-box">
+        <div class="pc-title">Limitations</div>
+        <ul class="pc-list">
+          <li>Transcription is NOT real-time — post-lecture only</li>
+          <li>NOT a live captioning tool for DHH students</li>
+          <li>Requires faculty permission protocol</li>
+          <li>License-based — must be provisioned by institution</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-box fit-best">
+        <div class="fit-title">Best fit — student profile</div>
+        <p class="fit-text">Students whose disability affects real-time note-taking: ADHD, processing speed differences, learning disabilities, anxiety, or physical disabilities limiting writing. Best when the student is engaged in lecture but cannot simultaneously write. The post-class AI outline and quiz make it a full study support system.</p>
+        <div class="disability-tags"><span class="dtag">ADHD</span><span class="dtag">Processing Speed</span><span class="dtag">Learning Disability</span><span class="dtag">Anxiety</span><span class="dtag">Physical Disability</span></div>
+      </div>
+      <div class="fit-box fit-avoid">
+        <div class="fit-title">Not the right fit when...</div>
+        <p class="fit-text">Deaf or Hard of Hearing students who need live captions during class — use Otter AI instead. Genio can complement Otter for post-lecture review.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tool-otter" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-icon-lg" style="background:#FAECE7">📝</div>
+      <div>
+        <div class="tool-card-title">Otter AI</div>
+        <div class="tool-card-tagline">Real-time transcription for lectures and online classes</div>
+      </div>
+    </div>
+    <div class="attrs-grid">
+      <div class="attr-item"><div class="attr-label">Platform</div><div class="attr-value">Web, iOS, Android</div></div>
+      <div class="attr-item"><div class="attr-label">Tech Level</div><div class="attr-value">Low — minimal setup</div></div>
+      <div class="attr-item"><div class="attr-label">Content Type</div><div class="attr-value">Live speech, Zoom/Meet, recorded audio</div></div>
+      <div class="attr-item"><div class="attr-label">AI Features</div><div class="attr-value">Strong — live captions, summary, speaker ID</div></div>
+      <div class="attr-item"><div class="attr-label">Lecture Capture</div><div class="attr-value">Yes — real-time live transcription + post-session summary</div></div>
+    </div>
+    <div class="subsection">
+      <div class="subsection-title">Overview</div>
+      <p class="desc-text">Otter AI provides real-time speech-to-text transcription, making it the primary tool for Deaf and Hard of Hearing students who need live caption access during class. It integrates directly with Zoom and Google Meet for online and hybrid courses. Unlike Genio, Otter produces captions in real time. It also generates post-session summaries and identifies multiple speakers — useful in discussion-heavy classes.</p>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-box pros-box">
+        <div class="pc-title">Strengths</div>
+        <ul class="pc-list">
+          <li>Real-time transcription — live captions during class</li>
+          <li>Integrates with Zoom and Google Meet</li>
+          <li>Speaker identification for multi-voice discussions</li>
+          <li>Post-session AI summary and keyword highlights</li>
+          <li>Free tier available; student-friendly pricing</li>
+        </ul>
+      </div>
+      <div class="pc-box cons-box">
+        <div class="pc-title">Limitations</div>
+        <ul class="pc-list">
+          <li>No study quiz, note-syncing, or slide import</li>
+          <li>Can struggle with accents or technical vocabulary</li>
+          <li>Cloud-stored transcripts — review privacy policy</li>
+          <li>Less structured for deep academic study workflows</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-box fit-best">
+        <div class="fit-title">Best fit — student profile</div>
+        <p class="fit-text">Deaf or Hard of Hearing students who need live captions during in-person or online class — this is Otter's primary DSPS use case. Also valuable for online courses needing Zoom caption access, or any student who wants searchable text notes without the full Genio workflow.</p>
+        <div class="disability-tags"><span class="dtag">Deaf / Hard of Hearing</span><span class="dtag">Auditory Processing</span><span class="dtag">Live Captions</span></div>
+      </div>
+      <div class="fit-box fit-avoid">
+        <div class="fit-title">Not the right fit when...</div>
+        <p class="fit-text">Students need structured study tools, slide syncing, or comprehensive note-taking workflows. Use Genio instead — or both tools together when live and post-lecture access are both needed.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matrix -->
+  <h2 class="section-header" id="matrix">Quick Reference Matrix</h2>
+  <div class="matrix-wrap">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Mobile</th>
+          <th>Tech Level</th>
+          <th>Reading Support</th>
+          <th>Lecture Capture</th>
+          <th>Real-time Captions</th>
+          <th>AI Summaries</th>
+          <th>Copyright Control</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tool-name-cell">Kurzweil 3000</td>
+          <td class="star-low">Limited</td>
+          <td>Moderate</td>
+          <td class="star-strong">★★★</td>
+          <td class="na-cell">—</td>
+          <td class="na-cell">—</td>
+          <td class="na-cell">—</td>
+          <td class="star-strong">★★★</td>
+          <td>$$$ (Inst.)</td>
+        </tr>
+        <tr>
+          <td class="tool-name-cell">Speechify</td>
+          <td class="star-strong">★★★</td>
+          <td>Low</td>
+          <td class="star-mid">★★</td>
+          <td class="na-cell">—</td>
+          <td class="na-cell">—</td>
+          <td class="star-low">Limited</td>
+          <td class="na-cell">—</td>
+          <td>Free / $</td>
+        </tr>
+        <tr>
+          <td class="tool-name-cell">Tailo</td>
+          <td class="star-mid">★★</td>
+          <td>Low-Mod</td>
+          <td class="star-strong">★★★</td>
+          <td class="na-cell">—</td>
+          <td class="na-cell">—</td>
+          <td class="star-strong">★★★</td>
+          <td class="na-cell">—</td>
+          <td>Inst. license</td>
+        </tr>
+        <tr>
+          <td class="tool-name-cell">Genio</td>
+          <td class="star-mid">★★</td>
+          <td>Moderate</td>
+          <td class="na-cell">—</td>
+          <td class="star-strong">★★★</td>
+          <td class="na-cell">— (post only)</td>
+          <td class="star-mid">★★ (post)</td>
+          <td class="star-mid">★★</td>
+          <td>$$$ (Inst.)</td>
+        </tr>
+        <tr>
+          <td class="tool-name-cell">Otter AI</td>
+          <td class="star-strong">★★★</td>
+          <td>Low</td>
+          <td class="na-cell">—</td>
+          <td class="star-mid">★★</td>
+          <td class="star-strong">★★★</td>
+          <td class="star-low">★ (meeting)</td>
+          <td class="na-cell">—</td>
+          <td>Free / $</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:.8rem;color:#777;margin-bottom:2rem">★★★ = strong capability &nbsp;|&nbsp; ★★ = moderate &nbsp;|&nbsp; ★ = limited &nbsp;|&nbsp; — = not applicable &nbsp;|&nbsp; Inst. = institutionally provisioned license required</p>
+
+  <!-- Decision Guide -->
+  <h2 class="section-header" id="decision">Decision Guide for Counselors</h2>
+  <div class="decision-tree">
+
+    <div class="dt-question">Is the primary challenge reading academic texts?</div>
+    <div class="dt-options">
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Student needs to see the actual page / has a print disability<div class="dt-result-tags"><span class="dt-tag dt-tag-blue">Kurzweil 3000</span></div></div></div>
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Student needs quick access to printed handouts on a phone<div class="dt-result-tags"><span class="dt-tag dt-tag-blue">Speechify</span></div></div></div>
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Student is overwhelmed by dense or complex academic language<div class="dt-result-tags"><span class="dt-tag dt-tag-blue">Tailo</span></div></div></div>
+    </div>
+
+    <hr class="dt-divider">
+
+    <div class="dt-question">Is the primary challenge keeping up in lectures?</div>
+    <div class="dt-options">
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Student cannot take notes fast enough (ADHD, LD, processing speed, physical disability)<div class="dt-result-tags"><span class="dt-tag dt-tag-amber">Genio</span></div></div></div>
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Student is Deaf / Hard of Hearing and needs live captions<div class="dt-result-tags"><span class="dt-tag dt-tag-coral">Otter AI</span></div></div></div>
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Student needs both live captions AND structured post-lecture review<div class="dt-result-tags"><span class="dt-tag dt-tag-coral">Otter AI</span><span class="dt-tag dt-tag-amber">+ Genio</span></div></div></div>
+    </div>
+
+    <hr class="dt-divider">
+
+    <div class="dt-question">What is the student's technology comfort level?</div>
+    <div class="dt-options">
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Very low — needs something usable in under 5 minutes with no training<div class="dt-result-tags"><span class="dt-tag dt-tag-blue">Speechify</span><span class="dt-tag dt-tag-coral">or Otter AI</span></div></div></div>
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Moderate — willing to learn a structured workflow<div class="dt-result-tags"><span class="dt-tag dt-tag-blue">Kurzweil 3000</span><span class="dt-tag dt-tag-amber">or Genio</span></div></div></div>
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Comfortable with AI tools and conversational interfaces<div class="dt-result-tags"><span class="dt-tag dt-tag-blue">Tailo</span></div></div></div>
+    </div>
+
+    <hr class="dt-divider">
+
+    <div class="dt-question">Are there institutional or faculty concerns?</div>
+    <div class="dt-options">
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Copyright protection for alternate media distributed to students<div class="dt-result-tags"><span class="dt-tag dt-tag-blue">Kurzweil 3000</span></div></div></div>
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Faculty concern about lecture recordings being shared externally<div class="dt-result-tags"><span class="dt-tag dt-tag-amber">Genio</span><span style="font-size:.75rem;color:#666;margin-left:6px">(recordings cannot be downloaded or shared)</span></div></div></div>
+      <div class="dt-opt"><span class="dt-opt-arrow">→</span><div>Online or hybrid course needing Zoom / Google Meet caption integration<div class="dt-result-tags"><span class="dt-tag dt-tag-coral">Otter AI</span></div></div></div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  Hartnell College — Department of Supportive Programs &amp; Services
+</footer>
+
+<script>
+function showTool(id, btn) {
+  document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('visible'));
+  document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tool-' + id).classList.add('visible');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
